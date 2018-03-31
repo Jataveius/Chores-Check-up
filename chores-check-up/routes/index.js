@@ -8,9 +8,9 @@ module.exports = function (passport) {
 	//add more routes here
 	
 
-	// If no API routes are hit, send the Angular app
+	// If no API routes are hit, send the React app
 	router.use(function(req, res) {
-	  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+	  res.sendFile(path.join(__dirname, "../client/public/index.html"));
 	});
 
 	return router;
