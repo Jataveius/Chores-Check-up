@@ -1,0 +1,72 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\jatav\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js start
+
+PATH: 
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\jatav\bin;C:\Program Files (x86)\Intel\iCLS Client;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Intel\iCLS Client;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\nodejs;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Program Files\MongoDB\Server\3.6\bin;C:\xampp\php;C:\Users\jatav\AppData\Local\Microsoft\WindowsApps;C:\Users\jatav\AppData\Local\learn_ide\bin;C:\Users\jatav\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Heroku\bin;C:\Users\jatav\AppData\Roaming\npm;C:\Program Files\Microsoft VS Code\bin;C:\Users\jatav\AppData\Local\GitHubDesktop\bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  6.11.1
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  {
+    "name": "chores-check-up",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "dependencies": {
+      "axios": "^0.18.0",
+      "bcrypt": "^1.0.3",
+      "bcryptjs": "^2.4.3",
+      "body-parser": "^1.18.2",
+      "express": "^4.16.3",
+      "express-session": "^1.15.6",
+      "jsonwebtoken": "^8.2.0",
+      "material-ui": "^0.20.0",
+      "mongoose": "^5.0.12",
+      "passport": "^0.4.0",
+      "passport-local": "^1.0.0",
+      "passport-local-mongoose": "^5.0.0",
+      "prop-types": "^15.6.1",
+      "react": "^16.3.0",
+      "react-dom": "^16.3.0",
+      "react-tap-event-plugin": "^3.0.2",
+      "validator": "^9.4.1",
+      "webpack": "^4.4.1"
+    },
+    "devDependencies": {},
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "node server.js"
+    },
+    "author": "Ashley Louitan",
+    "license": "ISC"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Command failed.
+  Exit code: 1
+  Command: C:\WINDOWS\system32\cmd.exe
+  Arguments: /d /s /c node server.js
+  Directory: c:\BootCamp\Chores-Check-up\chore-check-up
+  Output:
+  
+      at ProcessTermError.Error (native)
+      at ProcessTermError.MessageError (C:\Users\jatav\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
+      at new ProcessTermError (C:\Users\jatav\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:226:113)
+      at ChildProcess.<anonymous> (C:\Users\jatav\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:30281:17)
+      at emitTwo (events.js:106:13)
+      at ChildProcess.emit (events.js:191:7)
+      at maybeClose (internal/child_process.js:891:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
