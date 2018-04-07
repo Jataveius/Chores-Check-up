@@ -1,0 +1,310 @@
+@import url(bootstrap.css);
+h1 {
+  text-align: center; }
+
+h2 {
+  padding-top: 50px; }
+
+table, th, td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+  text-align: center; }
+
+table tr:nth-child(odd) {
+  background-color: #f2f2f2;
+  text-align: center; }
+
+table tr:nth-child(even) {
+  background-color: #ffffff;
+  text-align: center; }
+
+table {
+  width: 90vw;
+  margin: 4vw; }
+
+iframe {
+  padding-left: 10vw;
+  width: 50vw;
+  height: 60vh; }
+
+body {
+  font-family: 'Lato', sans-serif; }
+
+btn {
+  border-radius: 100%; }
+
+.bankbackground {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  height: 100vh;
+  width: auto; }
+
+.userbackground {
+  height: 100vh;
+  width: auto; }
+
+.funbackground {
+  background-image: url("../images/catsunglasses.jpeg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  height: 100vh;
+  width: auto; }
+
+.listbackground {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  height: 100vh;
+  width: auto; }
+
+.adduser, .addcalendar {
+  width: 90vw;
+  margin-left: 4vw;
+  margin-top: 2vh;
+  align-self: center; }
+
+.admin {
+  margin-top: 1vh; }
+
+.adminlogout {
+  float: right;
+  margin-right: 2vw; }
+
+.adminbuttons {
+  align-self: center;
+  margin-left: 4vw; }
+
+.banksubmit, .adduserbuttons {
+  float: right; }
+
+.button {
+  background-color: #4CAF50;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 100%; }
+
+.catimage {
+  margin-left: 1vw;
+  padding: 10px;
+  width: 400px;
+  height: 400px; }
+
+.funstuff {
+  margin: 50px;
+  width: 400px;
+  height: 400px;
+  border: solid 2px; }
+
+.homefont {
+  color: #0085dc; }
+
+.font-30 {
+  font-size: 30px; }
+
+.font-18 {
+  font-size: 18px; }
+
+@media screen and (max-width: 420px) {
+  .hometext {
+    color: white;
+    font-size: 10vh; } }
+
+.hometext {
+  align-content: center;
+  font-family: 'Fredericka the Great', cursive;
+  color: white;
+  font-size: 25vh;
+  margin-left: 10vw; }
+
+.container.home {
+  background-image: url("../images/blackboard-backgrounds-wallpapers.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: auto;
+  background-color: #0e7bc0; }
+
+.icons {
+  float: left;
+  margin-left: 40px;
+  margin-top: 20px;
+  margin-right: 40px;
+  height: 70px;
+  width: 70px; }
+
+.icons-modal {
+  float: left;
+  margin-left: 30px;
+  margin-top: 10px;
+  margin-right: 40px;
+  height: 60px;
+  width: 60px; }
+
+.jumbotron {
+  background-color: #7FFF00;
+  text-align: center;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 40px; }
+
+.loginform {
+  align-self: center;
+  /*margin-top: 0vh;*/
+  margin-left: 40vw; }
+
+.modal-content {
+  /*border: 2px solid black;*/
+  border-radius: 10px !important; }
+
+.navbardiv {
+  margin-bottom: 8vh; }
+
+.navbarbutton {
+  margin: 1vw;
+  float: right; }
+
+.pagination {
+  margin-left: 5vw; }
+
+.progress {
+  height: 7vh;
+  font-size: 3vh;
+  align-content: center; }
+
+.round-button {
+  display: block;
+  width: 110px;
+  height: 110px;
+  line-height: 80px;
+  border: 2px solid #f5f5f5;
+  border-radius: 50%;
+  /*color:#f5f5f5;*/
+  text-align: center;
+  text-decoration: none;
+  /*background: #464646;*/
+  box-shadow: 0 0 3px gray;
+  font-size: 20px;
+  font-weight: bold; }
+
+.round-button-img {
+  display: block;
+  width: 65%;
+  padding-left: 20%;
+  margin-left: 5%;
+  margin-top: 5%;
+  height: auto; }
+
+.search {
+  margin-left: 5vw;
+  margin-bottom: 0; }
+
+#admintable {
+  padding-top: 0;
+  width: 90vw; }
+
+#allowancebar {
+  width: 80vw;
+  margin-top: 2vh;
+  margin-left: 9vw; }
+
+#bank {
+  margin-top: 2vh;
+  margin-left: 28vw;
+  width: 40vw;
+  font-size: 50em; }
+
+#banktransaction {
+  width: 90vw;
+  margin-left: 3vw; }
+
+#calendar {
+  padding-top: 5vh;
+  padding-left: 8vw;
+  /*padding-right: 5vw;*/
+  /*width: 35vw;
+  height: 35vh;*/
+  align-content: center;
+  /*margin-left: 200px;*/ }
+
+#catimagediv {
+  /*border-style: solid;*/
+  /*border-color: red;*/
+  /*width: 500px;*/
+  /*margin: 10px;*/ }
+
+#checklisttable {
+  margin-left: 9vw;
+  width: 80vw; }
+
+/*.home {
+  margin-top: 50vh;
+}*/
+#kidbanktable {
+  margin-left: 9vw;
+  width: 80vw; }
+
+#list {
+  margin: 100px; }
+
+#piechart {
+  padding-top: 10vh;
+  padding-left: 8vw;
+  /*padding-right: 5vw;*/
+  width: 35vw;
+  height: 35vh;
+  align-content: center;
+  /*margin-left: 200px;*/
+  float: left; }
+
+#usertable {
+  width: 80vw; }
+
+#welcome {
+  margin-top: 2vh;
+  margin-left: 20vw;
+  width: 50vw; }
+
+/*xeditable styles*/
+.instructions .container h1 {
+  font-size: 24px;
+  font-weight: 700; }
+
+.instructions {
+  background-color: #0e7bc0;
+  color: #DDDDDD; }
+
+#entryForm {
+  margin-top: 14px; }
+
+#container {
+  margin-top: 10px; }
+
+.container p {
+  margin-top: 14px; }
+
+.message {
+  padding: 10px 0; }
+
+.message p {
+  margin-left: 10px; }
+
+.message:nth-child(odd) {
+  background-color: #eeeeee; }
+
+.message:nth-child(even) {
+  background-color: #f8f8f8; }
+
+.btn-danger {
+  margin-left: 10px; }
+
+select.form-control {
+  height: 34px !important; }
