@@ -16,35 +16,28 @@ router.get( '/:username', function( req, res ){
 }); //end get
 
 //get tasks from database
-router.get( '/', function( req, res ){
+router.get( '/',passport.authenticate('jwt', { session: false }), function( req, res ){
+    console.log(req.get('Authorization'), req.user);
     task.find().then(function (data){
-    console.log('in tasks route get data:',data);
     res.send( data);
   });
 }); //end get
 
 //save tasks to database
 router.post('/', function (req,res){
-  if(req.isAuthenticated()) {
   console.log('in post to tasks:', req.body);
-    var newTask;
-    newTask = new task(req.body);
-    console.log('new task:', newTask);
-    newTask.save( function ( err, response ){
-      if (err) {
-        console.log('DB error:',err);
-        res.sendStatus( 500 );
-      } else {
-        console.log('DB success:',response);
-        res.sendStatus( 201 );
-      }
-    });
-  } else {
-  // failure best handled on the server. do redirect here.
-  console.log('not logged in :(');
-  // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request 
-  res.send(false);
-  }
+  var newTask;
+  newTask = new task(req.body);
+  console.log('new task:', newTask);
+  newTask.save( function ( err, response ){
+    if (err) {
+      console.log('DB error:',err);
+      res.sendStatus( 500 );
+    } else {
+      console.log('DB success:',response);
+      res.sendStatus( 201 );
+    }
+  });
 });
 
 //delete task using the task db id

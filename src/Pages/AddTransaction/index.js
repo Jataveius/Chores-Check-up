@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
+import swal from 'bootstrap-sweetalert'
 import {
   getBankTransactions,
   addBankTransaction,
@@ -18,6 +19,7 @@ class AddTransaction extends Component {
     searchText: '',
     error: '',
     transactionsList: [],
+    allTransactions: [],
     users: [],
     balance: [],
     editableIndex: '',
@@ -45,17 +47,18 @@ class AddTransaction extends Component {
     const res = await getBankTransactions();
     if(res && res.data && res.data.length) {
       this.setState({
-        transactionsList: res.data
+        transactionsList: res.data,
+        allTransactions: res.data
       })
     }
   }
 
   checkBalance = () => {
-    const { transactionsList, users } = this.state
+    const { allTransactions, users } = this.state
     let balance = [];
     users.forEach((user) => {
       let counter = 0;
-      transactionsList.forEach((bank) => {
+      allTransactions.forEach((bank) => {
         if(user.username === bank.username && bank.transaction === 'deposit') {
           counter = counter + parseInt(bank.amount);
         } else {
@@ -86,9 +89,21 @@ class AddTransaction extends Component {
     }
   }
 
-  removeTransaction = async (transactionId) => {
-    const res = await delBankTransaction(transactionId);
-    this.getTransactions();
+  removeTransaction = (transactionId) => {
+    const that = this;
+    swal({
+        title: "Are you sure?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+      },
+      async function(){
+        swal("Deleted!", "Your imaginary file has been deleted.", "success");
+        const res = await delBankTransaction(transactionId);
+        that.getTransactions();
+      });
   }
 
   onEditable = (i, transaction) => {
@@ -169,6 +184,23 @@ class AddTransaction extends Component {
     this.getTransactions();
   }
 
+  onSearch = (e) => {
+    let { allTransactions, transactionsList } = this.state;
+    if(e.target.value) {
+      transactionsList = allTransactions.filter((t) => {
+        return t.transaction.toString().search(e.target.value) !== -1 || t.date.toString().search(e.target.value) !== -1
+          || t.amount.toString().search(e.target.value) !== -1 || t.username.toString().search(e.target.value) !== -1
+          || t.comment.toString().search(e.target.value) !== -1
+      })
+    } else {
+      transactionsList = allTransactions
+    }
+    this.setState({
+      transactionsList,
+      [e.target.name]: e.target.value
+    })
+  }
+
   render() {
     const { currentUser, balance, users, date, transaction, amount, username, comment, searchText, transactionsList, editableIndex, editDate, editTransaction, editComment, editAmount, editUsername } = this.state;
     return (
@@ -223,7 +255,7 @@ class AddTransaction extends Component {
             <div className="form-group" style={{marginLeft: '3vw'}}>
               <div className="input-group">
                 <div className="input-group-addon"><i className="fa fa-search" /></div>
-                <input type="text" className="form-control" name="searchText" placeholder="Search" value={searchText} onChange={this.onChange} />
+                <input type="text" className="form-control" name="searchText" placeholder="Search" value={searchText} onChange={this.onSearch} />
               </div>
             </div>
           </div>
@@ -231,8 +263,8 @@ class AddTransaction extends Component {
             <table className="table table-bordered table-hover table-condensed" >
               <thead>
                 <tr style={{fontWeight: 'bold'}}>
-                  <td style={{width:'20%'}}>Date</td>
-                  <td style={{width:'10%'}}>Transaction</td>
+                  <td style={{width:'15%'}}>Date</td>
+                  <td style={{width:'15%'}}>Transaction</td>
                   <td style={{width:'10%'}}>Amount</td>
                   <td style={{width:'20%'}}>Name</td>
                   <td style={{width:'25%'}}>Comment</td>
@@ -332,7 +364,7 @@ class AddTransaction extends Component {
                 return currentUser && currentUser.username !== b.username &&
                   <tr key={b.username} >
                     <td><span>{b.username}</span></td>
-                    <td>{b.balance}$</td>
+                    <td>{`$${b.balance && b.balance}.00`}</td>
                   </tr>
               })
             }

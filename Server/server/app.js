@@ -1,13 +1,35 @@
 var express = require('express');
-var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var path = require('path');
 var cors = require('cors')
+var jwt = require('jsonwebtoken');
 
-var passport = require('./strategies/user.strategy');
-var session = require('express-session');
+var passport = require("passport");
+var passportJWT = require("passport-jwt");
 
+var ExtractJwt = passportJWT.ExtractJwt;
+var JwtStrategy = passportJWT.Strategy;
+
+var jwtOptions = {}
+jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
+jwtOptions.secretOrKey = 'chores';
+
+var users = require('./models/user.model');
+var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
+    users.findOne({_id: jwt_payload.id}, function(err, user) {
+        if (err) {
+            return next(err, false);
+        }
+        if (user) {
+            return next(null, user);
+        } else {
+            return next(null, false);
+        }
+    });
+});
+passport.use(strategy);
+
+var app = express();
 // Route includes
 var index = require('./routes/index');
 var user = require('./routes/user');
@@ -23,13 +45,11 @@ var books = require('./routes/books');
 var bonusrewards = require('./routes/bonusrewards');
 
 // Body parser middleware
-app.use(cors())
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
 // start up passport sessions
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 // Routes
 app.use('/bonusrewards', bonusrewards);
@@ -38,12 +58,11 @@ app.use('/funstuff', funstuff);
 app.use('/adminbank', adminbank);
 app.use('/bank', bank);
 app.use('/checklist', checklist);
-app.use('/tasks', tasks);
+app.use('/tasks',passport.authenticate('jwt', { session: false }), tasks );
 app.use('/usernames', username);
 app.use('/register', register);
 app.use('/admin', admin);
 app.use('/user', user);
-app.use('/*', index);
 
 // Mongo Connection //
 var mongoURI = '';

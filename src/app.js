@@ -4,6 +4,7 @@ import LoggedIn from './Pages/LoggedIn'
 import LoggedOut from './Pages/LoggedOut'
 import './app.css'
 import './assets/css/style.css'
+import 'bootstrap-sweetalert/dist/sweetalert.css'
 
 const isUser = () => {
 

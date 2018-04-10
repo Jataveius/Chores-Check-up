@@ -23,6 +23,15 @@ class Login extends Component {
       error: '',
     }
 
+    componentWillMount() {
+      const user = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'))
+      if(user && user.admin) {
+        this.setState({
+          admin: user.admin
+        })
+      }
+    }
+
     onChange = (e) => {
       this.setState({
         [e.target.name]: e.target.value
@@ -41,23 +50,23 @@ class Login extends Component {
       };
       const res = await login(data);
       if(res.status === 'error') {
-        error = 'Please enter valid username or password'
+        error = 'Try again! Your username or password did not match.'
         return this.setState({ error })
       } else {
-        username = '';
-        password = '';
         localStorage.setItem('user', JSON.stringify(res.data))
         util.setCookie( 'auth', `Bearer ${res.data.token}` )
         util.setCookie( 'userId', res.data._id )
+        if(res.data && res.data.admin) {
+          this.props.history.push({
+            pathname: '/home'
+          })
+        } else {
+          this.props.history.push({
+            pathname: '/booklog'
+          })
+        }
       }
-      this.setState({
-        error,
-        username,
-        password,
-      })
-      this.props.history.push({
-        pathname: '/transaction'
-      })
+
     }
 
     render() {

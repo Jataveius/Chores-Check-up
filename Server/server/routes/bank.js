@@ -59,12 +59,14 @@ router.post('/', function (req,res){
     var amount = req.body.amount;
     var username = req.body.username;
     var comment = req.body.comment;
+    var date = req.body.date;
     bank.update({_id:req.body._id},{
       // date: date,
       transaction: transaction,
       amount: amount,
       username: username,
-      comment: comment
+      comment: comment,
+      date: date,
       }, function(err){
       if (err) {
         console.log('Error updating transaction from database', err);
