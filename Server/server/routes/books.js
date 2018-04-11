@@ -14,44 +14,37 @@ router.get( '/', function( req, res ){
 }); //end get
 // get tasks for specific user in database
 router.get( '/userbooks', function( req, res ){
-    console.log( 'in books username router get call', req.user.username );
-    book.find({username:req.user.username}).then(function (data){
+  console.log( 'in books username router get call', req.user.username );
+  book.find({username:req.user.username}).then(function (data){
     res.send( data);
   });
 }); //end get
 //save tasks to database
 router.post('/', function (req,res){
-  if(req.isAuthenticated()) {
   console.log('in post to books:', req.body, req.user.username);
-    var newBook;
-    bookObj = {
-      title: req.body.title,
-      author: req.body.author,
-      pages: req.body.pages,
-      level: req.body.level,
-      summary: req.body.summary,
-      date: req.body.date,
-      username: req.user.username,
-      momapproved: "Waiting Approval"
-    };
-    newBook= new book (bookObj);
-    // new book(req.body,req.user.username);
-    console.log('new book:', newBook);
-    newBook.save( function ( err, response ){
-      if (err) {
-        console.log('DB error:',err);
-        res.sendStatus( 500 );
-      } else {
-        console.log('DB success:',response);
-        res.sendStatus( 201 );
-      }
-    });
-  } else {
-  // failure best handled on the server. do redirect here.
-  console.log('not logged in :(');
-  // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
-  res.send(false);
-  }
+  var newBook;
+  bookObj = {
+    title: req.body.title,
+    author: req.body.author,
+    pages: req.body.pages,
+    level: req.body.level,
+    summary: req.body.summary,
+    date: req.body.date,
+    username: req.user.username,
+    momapproved: "Waiting Approval"
+  };
+  newBook= new book (bookObj);
+  // new book(req.body,req.user.username);
+  console.log('new book:', newBook);
+  newBook.save( function ( err, response ){
+    if (err) {
+      console.log('DB error:',err);
+      res.sendStatus( 500 );
+    } else {
+      console.log('DB success:',response);
+      res.sendStatus( 201 );
+    }
+  });
 });
 //delete task using the task db id
 router.delete( '/:id', function(req,res){

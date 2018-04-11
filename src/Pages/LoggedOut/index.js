@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import Login from '../Login'
 
 class LoggedOut extends Component {
@@ -9,6 +9,7 @@ class LoggedOut extends Component {
     return (
       <Switch>
         <Route exact path="/" component={Login} />
+        <Route path="*" render={()=><Redirect to="/" />} />
       </Switch>
     )
 

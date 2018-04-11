@@ -24,7 +24,7 @@ router.post('/', function (req,res){
   //get username specific data from bank collection in db
   router.get('/:username', function (req,res){
     console.log ('in router get user bank transactions');
-    bank.find({username:req.params.username}).then(function (data){
+    bank.find({username:req.params.username}).sort('date').then(function (data){
     console.log('in bank username route get data:',data);
     res.send( data);
     });//end get username

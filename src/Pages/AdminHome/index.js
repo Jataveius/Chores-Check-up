@@ -104,7 +104,7 @@ class AdminHome extends Component {
 
   onSubmit = async (event) => {
     event.preventDefault();
-    let {  admin, firstname, calendar, lastname, username, password, allowance, } = this.state;
+    let {  admin, firstname, lastname, username, password, allowance, } = this.state;
     const data = {
       username,
       lastname,
@@ -114,7 +114,7 @@ class AdminHome extends Component {
       password,
       allowance,
     }
-    const res = await addUser(data);
+    await addUser(data);
     this.setState({
       firstname: '',
       lastname: '',
@@ -148,7 +148,7 @@ class AdminHome extends Component {
     const { frequencies } = this.state
     let selected = [];
     if(task.frequency) {
-      selected = frequencies.filter(f => f === parseInt(task.frequency));
+      selected = frequencies.filter(f => f === parseInt(task.frequency, 10));
     }
     return selected.length ? selected[0] : 'Not set';
   };
@@ -183,7 +183,7 @@ class AdminHome extends Component {
       async function(){
         swal("Deleted!", "Your imaginary file has been deleted.", "success");
         if (transactionId) {
-          const res = await delTask(transactionId);
+          await delTask(transactionId);
         }
         tasks.splice(i, 1)
         that.setState({
@@ -237,7 +237,7 @@ class AdminHome extends Component {
       },
       async function(){
         swal("Deleted!", "User Removed Successfully.", "success");
-        const res = await removeUsers(userId);
+        await removeUsers(userId);
         that.getUsername();
       });
   }
@@ -297,15 +297,18 @@ class AdminHome extends Component {
               }
             }
           }
-          if(t.id === task.id) {
-            const dd = {
-              ...t,
-              ...newAdded[0],
-              editable: false,
+          if(t.id) {
+            if(t.id === task.id) {
+              const dd = {
+                ...t,
+                ...newAdded[0],
+                editable: false,
+              }
+              delete dd.id;
+              return dd;
             }
-            delete dd.id;
-            return dd;
           }
+
           return t;
         });
         this.setState({
@@ -335,7 +338,7 @@ class AdminHome extends Component {
   }
 
   render(){
-    const { frequencies, taskShow, users, currentUser, admin, firstname, calendar, lastname, username, password, allowance,  isShow, rows, editableIndex, tasks, taskUser, description, frequency, searchText} = this.state;
+    const { frequencies, taskShow, users, currentUser, admin, firstname, calendar, lastname, username, password, allowance,  isShow,  tasks, searchText} = this.state;
     return (
       <div className="container" style={{marginTop: 85}}>
         <div className="panel panel-default">
@@ -363,11 +366,11 @@ class AdminHome extends Component {
 
                 <div className="form-inline col-md-4">
                   <div className="form-group">
-                    <lable><b>Allowance:</b></lable>
+                    <label><b>Allowance:</b></label>
                     <input className="form-control" type="number" name="allowance" value={allowance} onChange={this.onChange} min="0" max="20" required/>
                   </div>
                   <div className="form-group" style={{'marginLeft': 38}} >
-                    <lable><b>Admin:</b></lable>
+                    <label><b>Admin:</b></label>
                     <select name="admin" value={admin} className="form-control" style={{height: 34}} onChange={this.onChange}>
                       <option value=""/>
                       <option value="true">true</option>

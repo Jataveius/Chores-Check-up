@@ -6,7 +6,7 @@ const BookApprovedModal = (props) => (
   <Modal show={props.show} onHide={props.onCancel}>
     <Modal.Header>
       <h3 className="mt-0">
-        <img src={logo} className="icons" />
+        <img src={logo} className="icons" alt="logo" />
         Approve a reward for: {props.username}
       </h3>
     </Modal.Header>

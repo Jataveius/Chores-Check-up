@@ -10,16 +10,21 @@ var task = require('../models/task.model.js');
 // get tasks for specific user in database
 router.get( '/:username', function( req, res ){
     console.log( 'in tasks username router get call' );
-    task.find({username:req.params.username}).then(function (data){
-    res.send( data);
-  });
-}); //end get
+    if(req.user.username === req.params.username) {
+      task.find({username:req.user.username}).then(function (data){
+        res.send(data);
+      });
+    }else {
+      res.send("UnAthorized");
+    }
+
+});
 
 //get tasks from database
-router.get( '/',passport.authenticate('jwt', { session: false }), function( req, res ){
+router.get( '/', function( req, res ){
     console.log(req.get('Authorization'), req.user);
     task.find().then(function (data){
-    res.send( data);
+    res.send(data);
   });
 }); //end get
 

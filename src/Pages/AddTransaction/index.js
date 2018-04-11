@@ -24,12 +24,6 @@ class AddTransaction extends Component {
     balance: [],
     editableIndex: '',
     currentUser: {} ,
-    editDate: '',
-    editTransaction: '',
-    editComment: '',
-    editUsername: '',
-    editAmount: '',
-    editTransactionId: '',
   }
 
   componentWillMount() {
@@ -60,10 +54,10 @@ class AddTransaction extends Component {
       let counter = 0;
       allTransactions.forEach((bank) => {
         if(user.username === bank.username && bank.transaction === 'deposit') {
-          counter = counter + parseInt(bank.amount);
+          counter = counter + parseInt(bank.amount, 10);
         } else {
           if (user.username === bank.username && bank.transaction === 'withdrawal') {
-            counter = counter - parseInt(bank.amount);
+            counter = counter - parseInt(bank.amount, 10);
           }
         }
       })
@@ -101,55 +95,92 @@ class AddTransaction extends Component {
       },
       async function(){
         swal("Deleted!", "Your imaginary file has been deleted.", "success");
-        const res = await delBankTransaction(transactionId);
+        await delBankTransaction(transactionId);
         that.getTransactions();
       });
   }
 
-  onEditable = (i, transaction) => {
-    const unix = moment(transaction.date).unix();
-    const editDate = moment.unix(unix).format('YYYY-MM-DD')
+  onEditable = (i) => {
+    let {transactionsList} = this.state
+      transactionsList = transactionsList.map((obj, i1) =>{
+            if(i === i1){
+                return{
+                    ...obj,
+                    editable1: true,
+                }
+            }
+            return obj;
+      });
     this.setState({
-      editableIndex: i,
-      editDate: editDate,
-      editTransaction: transaction.transaction,
-      editComment: transaction.comment,
-      editUsername: transaction.username,
-      editAmount: transaction.amount,
-      editTransactionId: transaction._id,
+        transactionsList
     })
   }
 
-  onEditableCancel = () => {
+  onTextChange = (e,i) =>{
+    let {transactionsList} = this.state;
+    transactionsList = transactionsList.map((obj, i1)=>{
+        if(i === i1){
+          return{
+              ...obj,
+              [e.target.name]: e.target.value,
+          }
+        }
+        return obj;
+    });
+
     this.setState({
-      editableIndex: ''
+        transactionsList
     })
   }
 
-  updateTransaction = async () => {
-    const { editTransactionId, editDate, editTransaction, editComment, editUsername, editAmount } = this.state;
-    const data = {
-      date: editDate,
-      transaction: editTransaction,
-      amount: editAmount,
-      username: editUsername,
-      comment: editComment,
-      _id: editTransactionId
+  onEditableCancel = (i) => {
+    let {transactionsList,allTransactions} = this.state;
+    transactionsList[i].editable1 = false;
+    if(transactionsList[i]._id) {
+      const editRow = allTransactions.filter(t => t._id === transactionsList[i]._id);
+      transactionsList[i] = editRow[0]
     }
-    if( editDate && editTransaction && editUsername, editAmount) {
-      const res = await updateBankTransaction(data);
-      if(res) {
-        this.setState({
-          editDate: '',
-          editTransaction: '',
-          editComment: '',
-          editUsername: '',
-          editAmount: '',
-          editableIndex: '',
-        });
-        this.getTransactions()
+    this.setState({
+      transactionsList
+    })
+  }
+
+  updateTransaction = async (transaction) => {
+    let {transactionsList} = this.state;
+      if(transaction && transaction.date && transaction.transaction && transaction.amount && transaction.username && transaction.comment) {
+          const data = {
+              date:transaction.date,
+              transaction: transaction.transaction,
+              amount:transaction.amount,
+              username:transaction.username,
+              comment:transaction.comment
+          }
+
+          if(transaction._id) {
+              data._id = transaction._id;
+              await updateBankTransaction(data);
+          }
+
+          const res = await getBankTransactions();
+          if(res && res.data && res.data.length) {
+              transactionsList = transactionsList.map((t) => {
+                  if(t._id) {
+                      if(t._id === transaction._id)
+                      {
+                          return {
+                              ...t,
+                              editable1: false,
+                          }
+                      }
+                  }
+                  return t;
+              });
+              this.setState({
+                  allTransactions: res.data,
+                  transactionsList
+              })
+          }
       }
-    }
   }
 
   onChange = (e) => {
@@ -188,7 +219,9 @@ class AddTransaction extends Component {
     let { allTransactions, transactionsList } = this.state;
     if(e.target.value) {
       transactionsList = allTransactions.filter((t) => {
-        return t.transaction.toString().search(e.target.value) !== -1 || t.date.toString().search(e.target.value) !== -1
+        const unix = moment(t.date).unix();
+        const date = moment.unix(unix).format('MM-DD-YYYY')
+        return t.transaction.toString().search(e.target.value) !== -1 || date.toString().search(e.target.value) !== -1
           || t.amount.toString().search(e.target.value) !== -1 || t.username.toString().search(e.target.value) !== -1
           || t.comment.toString().search(e.target.value) !== -1
       })
@@ -202,12 +235,11 @@ class AddTransaction extends Component {
   }
 
   render() {
-    const { currentUser, balance, users, date, transaction, amount, username, comment, searchText, transactionsList, editableIndex, editDate, editTransaction, editComment, editAmount, editUsername } = this.state;
+    const { currentUser, balance, users, date, transaction, amount, username, comment, searchText, transactionsList } = this.state;
     return (
-      <div>
-        <div className="panel-body">
-          <div id="banktransaction" className="panel panel-default">
-            <div className="panel-heading" style={{marginTop: '8vh'}}><b>MAKE A TRANSACTION AT THE MOM BANK</b></div>
+      <div className="container" style={{marginTop: 85, padding:0}}>
+          <div className="panel panel-default">
+            <div className="panel-heading"><b>MAKE A TRANSACTION AT THE MOM BANK</b></div>
             <div className="panel-body">
               <form onSubmit={this.onSubmit}>
                 <div className="form-group row">
@@ -245,21 +277,21 @@ class AddTransaction extends Component {
                     <input className="form-control" type="text" name="comment" value={comment} onChange={this.onChange} />
                   </div>
                   <div className="col-md-4">
-                    <button type="submit" className="btn  btn-primary" style={{float: 'right', marginRight: '5vw', marginTop: '4vh'}}>Submit</button>
+                    <button type="submit" className="btn  btn-primary" style={{float: 'right', marginTop: '7%'}}>Submit</button>
                   </div>
                 </div>
               </form>
             </div>
           </div>
           <div className="col-md-4">
-            <div className="form-group" style={{marginLeft: '3vw'}}>
+            <div className="form-group" style={{marginLeft: '-4%'}}>
               <div className="input-group">
                 <div className="input-group-addon"><i className="fa fa-search" /></div>
                 <input type="text" className="form-control" name="searchText" placeholder="Search" value={searchText} onChange={this.onSearch} />
               </div>
             </div>
           </div>
-          <div id="admintable">
+          <div>
             <table className="table table-bordered table-hover table-condensed" >
               <thead>
                 <tr style={{fontWeight: 'bold'}}>
@@ -274,21 +306,23 @@ class AddTransaction extends Component {
               <tbody>
                 {
                   transactionsList.map((transaction, i) => {
-                      const unix = moment(transaction.date).unix();
-                      const date = moment.unix(unix).format('MM-DD-YYYY')
+                    const unix = moment(transaction.date).unix();
+                    const date = moment.unix(unix).format('MM-DD-YYYY')
+                    const editDate = moment.unix(unix).format('YYYY-MM-DD')
+
                       return (
                         <tr key={i}>
                           <td>
                             {
-                              editableIndex === i ?
-                                <input className="form-control" type="date" name="editDate" value={editDate} onChange={this.onChange} required />
+                                transaction.editable1 ?
+                                <input className="form-control" type="date" name="date" value={editDate} onChange={(e) => this.onTextChange(e, i)} required />
                               : <span className="editable">{date}</span>
                             }
                           </td>
                           <td>
                             {
-                              editableIndex === i ?
-                                <select className="form-control" name="editTransaction" value={editTransaction} onChange={this.onChange} required>
+                                transaction.editable1 ?
+                                <select className="form-control" name="transaction" value={transaction.transaction} onChange={(e) => this.onTextChange(e, i)} required>
                                   <option value="">Select type</option>
                                   <option value="deposit">deposit</option>
                                   <option value="withdrawal">withdrawal</option>
@@ -298,15 +332,15 @@ class AddTransaction extends Component {
                           </td>
                           <td>
                             {
-                              editableIndex === i ?
-                                <input className="form-control" type="number" name="editAmount" value={editAmount} min="0" max="100" onChange={this.onChange} required />
+                                transaction.editable1 ?
+                                <input className="form-control" type="number" name="amount" value={transaction.amount} min="0" max="100" onChange={(e) => this.onTextChange(e, i)} required />
                               : <span className="editable">{transaction.amount}</span>
                             }
                           </td>
                           <td>
                             {
-                              editableIndex === i ?
-                                <select className="form-control" name="editUsername" value={editUsername} onChange={this.onChange} required >
+                                transaction.editable1 ?
+                                <select className="form-control" name="username" value={transaction.username} onChange={(e) => this.onTextChange(e, i)} required >
                                   <option value="">Select child</option>
                                   {
                                     users.map((user) => {
@@ -319,13 +353,14 @@ class AddTransaction extends Component {
                           </td>
                           <td>
                             {
-                              editableIndex === i ?
-                                <input className="form-control" type="text" name="editComment" value={editComment} onChange={this.onChange} />
+                                transaction.editable1 ?
+                                <input className="form-control" type="text" name="comment" value={transaction.comment} onChange={(e) => this.onTextChange(e, i)} />
                               : <span className="editable">{transaction.comment}</span>
                             }
                           </td>
                           <td className="text-center">
-                            {editableIndex === i ?
+                            {
+                                transaction.editable1 ?
                               <div className="buttons" >
                                 <button type="button"  style={{display: 'inline-block'}} className="btn btn-primary" onClick={this.updateTransaction}>
                                   save
@@ -347,9 +382,8 @@ class AddTransaction extends Component {
                 }
               </tbody>
             </table>
-          </div>
-          <table id="balancestable">
-            <thead>
+            <table style={{width: "100%"}}>
+              <thead>
               <tr>
                 <th colSpan={2}>Account Balances</th>
               </tr>
@@ -357,20 +391,20 @@ class AddTransaction extends Component {
                 <th>Name</th>
                 <th>Balance</th>
               </tr>
-            </thead>
-            <tbody>
-            {
-              balance.map((b) => {
-                return currentUser && currentUser.username !== b.username &&
-                  <tr key={b.username} >
-                    <td><span>{b.username}</span></td>
-                    <td>{`$${b.balance && b.balance}.00`}</td>
-                  </tr>
-              })
-            }
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+              {
+                balance.map((b) => {
+                  return currentUser && currentUser.username !== b.username &&
+                    <tr key={b.username} >
+                      <td><span>{b.username}</span></td>
+                      <td>{`$${b.balance && b.balance}.00`}</td>
+                    </tr>
+                })
+              }
+              </tbody>
+            </table>
+          </div>
       </div>
     )
 

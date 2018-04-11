@@ -27,7 +27,7 @@ class Reward extends Component {
   }
 
   updateRewardBook = async () => {
-    const { reward, date, approvableBook } = this.state;
+    const { reward, approvableBook } = this.state;
     if(!reward) {
       swal({
         title: "Empty Fields!",
@@ -42,7 +42,7 @@ class Reward extends Component {
           reward: reward,
           book_id: approvableBook._id,
         }
-        const res = await updateBook(data);
+        await updateBook(data);
         swal({
           title: "Reward Added!",
           type: "success",
@@ -65,6 +65,7 @@ class Reward extends Component {
     this.setState({
       approvedModal: !this.state.approvedModal,
       approvableBook: book || {},
+      reward: '',
       date: '',
     })
   }

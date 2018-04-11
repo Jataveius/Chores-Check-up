@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var user = require('../models/user.model.js');
 
@@ -67,7 +68,7 @@ router.get('/logout', function(req, res) {
 });
 
 //delete user from db
-router.delete( '/:id', function(req,res){
+router.delete( '/:id', passport.authenticate('jwt', { session: false }), function(req,res){
     console.log("in delete user request", req.params.id);
     user.remove({_id:req.params.id}, function(err){
       if (err) {

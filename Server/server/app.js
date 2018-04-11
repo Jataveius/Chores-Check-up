@@ -3,15 +3,13 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors')
 var jwt = require('jsonwebtoken');
-
-var passport = require("passport");
-var passportJWT = require("passport-jwt");
-
-var ExtractJwt = passportJWT.ExtractJwt;
-var JwtStrategy = passportJWT.Strategy;
+var passport = require('./strategies/user.strategy');
+var session = require('express-session');
+var JwtStrategy = require('passport-jwt').Strategy,
+  ExtractJwt = require('passport-jwt').ExtractJwt;
 
 var jwtOptions = {}
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
+jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
 jwtOptions.secretOrKey = 'chores';
 
 var users = require('./models/user.model');
@@ -52,16 +50,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 // Routes
-app.use('/bonusrewards', bonusrewards);
-app.use('/books', books);
-app.use('/funstuff', funstuff);
-app.use('/adminbank', adminbank);
-app.use('/bank', bank);
-app.use('/checklist', checklist);
-app.use('/tasks',passport.authenticate('jwt', { session: false }), tasks );
-app.use('/usernames', username);
+app.use('/bonusrewards', passport.authenticate('jwt', { session: false }), bonusrewards);
+app.use('/books', passport.authenticate('jwt', { session: false }), books);
+app.use('/funstuff', passport.authenticate('jwt', { session: false }), funstuff);
+app.use('/adminbank', passport.authenticate('jwt', { session: false }), adminbank);
+app.use('/bank', passport.authenticate('jwt', { session: false }), bank);
+app.use('/checklist', passport.authenticate('jwt', { session: false }), checklist);
+app.use('/tasks', passport.authenticate('jwt', { session: false }), tasks );
+app.use('/usernames', passport.authenticate('jwt', { session: false }), username);
 app.use('/register', register);
-app.use('/admin', admin);
+app.use('/admin', passport.authenticate('jwt', { session: false }), admin);
 app.use('/user', user);
 
 // Mongo Connection //

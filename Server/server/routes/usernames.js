@@ -1,9 +1,6 @@
 //requires
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
-var path = require('path');
-var bodyParser = require( 'body-parser' );
 var users = require('../models/user.model.js');
 
 

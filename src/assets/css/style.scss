@@ -19,8 +19,7 @@ table tr:nth-child(even) {
   text-align: center; }
 
 table {
-  width: 90vw;
-  margin: 4vw; }
+  width: 90vw;}
 
 iframe {
   padding-left: 10vw;
@@ -41,8 +40,7 @@ btn {
   width: auto; }
 
 .userbackground {
-  height: 100vh;
-  width: auto; }
+  height: 100vh;}
 
 .funbackground {
   background-image: url("../images/catsunglasses.jpeg");
@@ -255,9 +253,6 @@ btn {
   margin: 100px; }
 
 #piechart {
-  padding-top: 10vh;
-  padding-left: 8vw;
-  /*padding-right: 5vw;*/
   width: 35vw;
   height: 35vh;
   align-content: center;
@@ -268,7 +263,7 @@ btn {
   width: 80vw; }
 
 #welcome {
-  margin-top: 2vh;
+  margin-top: 50px;
   margin-left: 20vw;
   width: 50vw; }
 

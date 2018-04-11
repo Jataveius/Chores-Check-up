@@ -54,16 +54,18 @@ class Login extends Component {
         return this.setState({ error })
       } else {
         localStorage.setItem('user', JSON.stringify(res.data))
-        util.setCookie( 'auth', `Bearer ${res.data.token}` )
+        util.setCookie( 'auth', `JWT ${res.data.token}`);
         util.setCookie( 'userId', res.data._id )
         if(res.data && res.data.admin) {
-          this.props.history.push({
+          window.location.href = '/admin';
+         /* this.props.history.push({
             pathname: '/home'
-          })
+          })*/
         } else {
-          this.props.history.push({
-            pathname: '/booklog'
-          })
+          window.location.href = '/user';
+         /* this.props.history.push({
+            pathname: '/user'
+          })*/
         }
       }
 

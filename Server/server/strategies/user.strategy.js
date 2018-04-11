@@ -28,7 +28,6 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = 'secret';
 console.log(opts)
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-  console.log('asasasasasasasas====');
   users.findOne({id: jwt_payload.id}, function(err, user) {
     if (err) {
       return done(err, false);

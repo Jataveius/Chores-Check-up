@@ -5,6 +5,8 @@ import LoggedOut from './Pages/LoggedOut'
 import './app.css'
 import './assets/css/style.css'
 import 'bootstrap-sweetalert/dist/sweetalert.css'
+import 'react-big-calendar-like-google/lib/css/react-big-calendar.css'
+
 
 const isUser = () => {
 
