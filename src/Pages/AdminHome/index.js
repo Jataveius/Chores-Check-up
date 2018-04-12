@@ -12,10 +12,9 @@ import {
 } from '../../utils/_data'
 
 const table = {
-  'border': '1px solid grey',
-  'marginLeft': 17,
-  'width': 1100,
-  'margin': '1vw'
+  'marginLeft': 15,
+  'width': 1110,
+  'margin-bottom': 15
 };
 
 class AdminHome extends Component {
@@ -366,11 +365,11 @@ class AdminHome extends Component {
 
                 <div className="form-inline col-md-4">
                   <div className="form-group">
-                    <label><b>Allowance:</b></label>
+                    <b>Allowance:</b>
                     <input className="form-control" type="number" name="allowance" value={allowance} onChange={this.onChange} min="0" max="20" required/>
                   </div>
                   <div className="form-group" style={{'marginLeft': 38}} >
-                    <label><b>Admin:</b></label>
+                    <b>Admin:</b>
                     <select name="admin" value={admin} className="form-control" style={{height: 34}} onChange={this.onChange}>
                       <option value=""/>
                       <option value="true">true</option>
@@ -378,7 +377,7 @@ class AdminHome extends Component {
                     </select>
                   </div>
                 </div>
-                <div style={{'float': 'right'}}>
+                <div style={{'marginLeft': 3}}>
                   <button type="submit" className="btn btn-primary">Submit</button>
                   <button type="button" className="btn btn-primary ml-2" onClick={this.isShowTable}>{isShow ? 'Hide Users' : 'Show Users' }</button>
                 </div>
@@ -576,8 +575,8 @@ class AdminHome extends Component {
           }
           </tbody>
         </table>
-        <div className="btn-group ng-scope">
-          <button type="button" className="btn btn-default btn-primary" onClick={this.addRow} disabled={!taskShow}>Add Task</button>
+        <div className="btn-group ng-scope" style={{'paddingBottom': 25}}>
+          <button type="button" className="btn btn-default btn-primary" onClick={this.addRow} disabled={!taskShow}>Add Task</button> <br/><br/>
           <button type="button" className="btn btn-default btn-primary" onClick={this.handleTask}>{taskShow ? 'Hide Task List' : 'Show Task List' }</button>
         </div>
       </div>

@@ -14,7 +14,7 @@ Check List
 
 [x] Add input for Admin to add child users and save to database
 
-[x] Add x-editable Angular table for Admin page to load/add/save/delete tasks in database
+[x] Add x-editable table for Admin page to load/add/save/delete tasks in database
 
 [x] Set up initial User home page with nav bar to chore page and Mom bank page
 

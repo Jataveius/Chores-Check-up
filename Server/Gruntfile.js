@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     // uglify - minification
     uglify: {
       my_target: {
-        //Make sure the Angular syntax works or set mangle to false. This is going require that extra array for the dependancies you inject.
+        //Make sure the syntax works or set mangle to false. This is going require that extra array for the dependancies you inject.
         options: {
          mangle: false
        },
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
       main: {
         files: [
           //current working directory
-          {expand: true, cwd: 'node_modules', src: ['bootstrap/**', 'angular/**'], dest: 'server/public/vendors'}
+          {expand: true, cwd: 'node_modules', src: ['bootstrap/**'], dest: 'server/public/vendors'}
         ]
       }
     }

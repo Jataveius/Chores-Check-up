@@ -101,7 +101,7 @@ class AddTransaction extends Component {
   }
 
   onEditable = (i) => {
-    let {transactionsList} = this.state
+    let {transactionsList} = this.state;
       transactionsList = transactionsList.map((obj, i1) =>{
             if(i === i1){
                 return{
@@ -237,7 +237,7 @@ class AddTransaction extends Component {
   render() {
     const { currentUser, balance, users, date, transaction, amount, username, comment, searchText, transactionsList } = this.state;
     return (
-      <div className="container" style={{marginTop: 85, padding:0}}>
+      <div className="container" style={{marginTop: 85}}>
           <div className="panel panel-default">
             <div className="panel-heading"><b>MAKE A TRANSACTION AT THE MOM BANK</b></div>
             <div className="panel-body">
@@ -291,7 +291,7 @@ class AddTransaction extends Component {
               </div>
             </div>
           </div>
-          <div>
+          <div style={{'paddingBottom': 25}}>
             <table className="table table-bordered table-hover table-condensed" >
               <thead>
                 <tr style={{fontWeight: 'bold'}}>
@@ -361,18 +361,18 @@ class AddTransaction extends Component {
                           <td className="text-center">
                             {
                                 transaction.editable1 ?
-                              <div className="buttons" >
-                                <button type="button"  style={{display: 'inline-block'}} className="btn btn-primary" onClick={this.updateTransaction}>
+                              <div className="buttons">
+                                <button type="button"  style={{display: 'inline-block'}} className="btn btn-primary" onClick={() => this.updateTransaction(transaction)}>
                                   save
                                 </button>
-                                <button type="button"  style={{display: 'inline-block'}} className="btn btn-default ml-3" onClick={this.onEditableCancel}>
+                                <button type="button"  style={{display: 'inline-block'}} className="btn btn-default ml-3" onClick={() => this.onEditableCancel(i)}>
                                   cancel
                                 </button>
                               </div>
                               :
                               <div className="buttons">
                                 <button type="button" className="btn btn-primary" onClick={() => this.onEditable(i, transaction)}>edit</button>
-                                <button type="button" className="btn btn-danger" onClick={() => this.removeTransaction(transaction._id)} >del</button>
+                                <button type="button" className="btn btn-danger" onClick={() => this.removeTransaction(transaction._id)}>del</button>
                               </div>
                             }
                           </td>
