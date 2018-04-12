@@ -85,7 +85,7 @@ class MyTodoList extends Component {
         <table id="checklisttable">
           <tbody>
           <tr>
-            <th>My Responsibility</th>
+            <th>Task</th>
             <th>Required</th>
             <th>Sunday</th>
             <th>Monday</th>

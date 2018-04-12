@@ -433,7 +433,7 @@ class AdminHome extends Component {
           <tbody>
           <tr style={{fontWeight: 'bold'}}>
             <td style={{width: '35%'}}>
-              Responsibility
+              Task
             </td>
             <td style={{width: '20%'}}>
               Frequency

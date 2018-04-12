@@ -112,7 +112,7 @@ class Login extends Component {
             </div>
             <Row>
               <Col md={6}>
-                <p className="hometext"> Responsibility</p>
+                <p className="hometext">Accountability</p>
               </Col>
             </Row>
           </div>
