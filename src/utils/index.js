@@ -1,4 +1,6 @@
-const getURL = url => `http://localhost:3030/${url ? url : ''}`
+// const getURL = url => `http://localhost:3030/${url ? url : ''}`
+const getURL = url => `http://localhost:27017/chorescheckupapp${url ? url : ''}`
+
 
 const getCookie = ( name ) => {
 
