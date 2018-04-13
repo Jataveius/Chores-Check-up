@@ -63,6 +63,8 @@ app.use('/admin', passport.authenticate('jwt', { session: false }), admin);
 app.use('/user', user);
 
 // Mongo Connection //
+
+mongoose.Promise = global.Promise;
 var mongoURI = '';
 // process.env.MONGODB_URI will only be defined if you
 // are running on Heroku
